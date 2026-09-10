@@ -11,6 +11,8 @@ public record TransactionCreatedEvent(
         BigDecimal amount,
         String currency,
         String paymentMethod,
+        String deviceId,
+        String ipAddress,
         String status,
         Instant createdAt
 ) {
