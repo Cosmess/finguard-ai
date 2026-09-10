@@ -32,7 +32,7 @@ management:
       probes:
         enabled: true
 
-  fraud:
-    ai:
-      enabled: true
-      input-topic: fraud.suspected
+fraud:
+  ai:
+    enabled: true
+    input-topic: fraud.suspected
