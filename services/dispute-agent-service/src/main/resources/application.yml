@@ -5,6 +5,10 @@ spring:
 server:
   port: 8085
 
+dispute:
+  agent:
+    dispute-service-url: ${DISPUTE_SERVICE_URL:http://localhost:8084}
+
 management:
   endpoints:
     web:

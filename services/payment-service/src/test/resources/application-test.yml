@@ -5,3 +5,4 @@ payment:
 security:
   jwt:
     enabled: false
+    secret: test-secret-with-at-least-32-bytes-long

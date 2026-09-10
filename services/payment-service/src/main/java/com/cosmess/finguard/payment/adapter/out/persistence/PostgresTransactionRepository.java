@@ -23,6 +23,6 @@ class PostgresTransactionRepository implements TransactionRepository {
 
     @Override
     public Optional<Transaction> findById(UUID id) {
-        return repository.findById(id).map(TransactionEntity::toDomain);
+        return repository.findById(id).map(entity -> entity.toDomain());
     }
 }

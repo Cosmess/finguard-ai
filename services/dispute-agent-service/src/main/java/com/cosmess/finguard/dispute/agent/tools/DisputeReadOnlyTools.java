@@ -1,7 +1,9 @@
 package com.cosmess.finguard.dispute.agent.tools;
 
 import com.cosmess.finguard.dispute.agent.application.DisputeAgentContext;
+import com.cosmess.finguard.dispute.agent.application.DisputeContextReader;
 import dev.langchain4j.agent.tool.Tool;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -10,14 +12,16 @@ import java.util.UUID;
 @Component
 public class DisputeReadOnlyTools {
 
-    private final Map<UUID, DisputeAgentContext> contexts;
+    private final DisputeContextReader contextReader;
 
-    public DisputeReadOnlyTools() {
-        this(Map.of());
+    @Autowired
+    public DisputeReadOnlyTools(DisputeContextReader contextReader) {
+        this.contextReader = contextReader;
     }
 
     public DisputeReadOnlyTools(Map<UUID, DisputeAgentContext> contexts) {
-        this.contexts = Map.copyOf(contexts);
+        Map<UUID, DisputeAgentContext> immutableContexts = Map.copyOf(contexts);
+        this.contextReader = immutableContexts::get;
     }
 
     @Tool("Reads the current dispute status and reason without changing the dispute")
@@ -31,11 +35,15 @@ public class DisputeReadOnlyTools {
     }
 
     public DisputeAgentContext context(UUID disputeId) {
-        return contexts.getOrDefault(disputeId, new DisputeAgentContext(
+        DisputeAgentContext context = contextReader.read(disputeId);
+        if (context != null) {
+            return context;
+        }
+        return new DisputeAgentContext(
                 disputeId,
                 "UNKNOWN",
                 "No dispute context available",
                 java.util.List.of()
-        ));
+        );
     }
 }

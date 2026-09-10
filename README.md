@@ -53,7 +53,7 @@ Endpoints principais:
 
 ## Agentes de disputa
 
-O `dispute-agent-service` usa LangChain4j para declarar ferramentas de consulta somente leitura. O orquestrador determinístico pode solicitar contexto, solicitar evidências ou encaminhar uma disputa com evidências para revisão manual. O agente não altera estados, cria evidências, aprova disputas nem executa chargebacks.
+O `dispute-agent-service` usa LangChain4j para declarar ferramentas de consulta somente leitura e consulta o `dispute-service` por GET. O orquestrador determinístico pode solicitar contexto, solicitar evidências ou encaminhar uma disputa com evidências para revisão manual. O agente não altera estados, cria evidências, aprova disputas nem executa chargebacks.
 
 ## Decisões determinísticas
 
@@ -89,7 +89,7 @@ O `fraud-ai-service` consome `fraud.suspected` e classifica a recomendação con
 
 ## Base de conhecimento e RAG
 
-O `knowledge-service` recebe documentos em `POST /knowledge/documents` e realiza busca determinística em `GET /knowledge/search`. Cada resultado inclui trecho encontrado e citação com o documento e sua fonte. O schema próprio usa PostgreSQL com extensão pgvector; a coluna de embedding fica preparada para a próxima evolução sem depender de provedor externo nesta fase.
+O `knowledge-service` recebe documentos em `POST /knowledge/documents` e realiza busca híbrida em `GET /knowledge/search`, combinando cobertura lexical e embeddings determinísticos. Cada resultado inclui trecho encontrado e citação com o documento e sua fonte. O schema próprio usa PostgreSQL com extensão pgvector, sem depender de provedor externo nesta fase.
 
 ## Arquitetura
 
@@ -187,3 +187,6 @@ As decisoes iniciais estao em `docs/adr`:
 - ADR 0006: sinais de velocidade com Kafka Streams
 - ADR 0007: agentes de disputa somente leitura (histórico)
 - ADR 0008: agentes de disputa somente leitura (oficial da Fase 8)
+- ADR 0009: stack de observabilidade local
+- ADR 0010: segurança com JWT e RBAC
+- ADR 0011: hardening pós-revisão

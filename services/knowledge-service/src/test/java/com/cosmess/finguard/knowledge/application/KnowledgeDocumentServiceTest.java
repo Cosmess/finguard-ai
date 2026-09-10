@@ -18,9 +18,11 @@ import static org.mockito.Mockito.when;
 class KnowledgeDocumentServiceTest {
 
     private final KnowledgeDocumentRepository repository = mock(KnowledgeDocumentRepository.class);
+        private final DeterministicEmbeddingProvider embeddingProvider = new DeterministicEmbeddingProvider();
     private final KnowledgeDocumentService service = new KnowledgeDocumentService(
             repository,
-            Clock.fixed(Instant.parse("2026-09-10T12:00:00Z"), ZoneOffset.UTC)
+            Clock.fixed(Instant.parse("2026-09-10T12:00:00Z"), ZoneOffset.UTC),
+            embeddingProvider
     );
 
     @Test
@@ -28,8 +30,8 @@ class KnowledgeDocumentServiceTest {
         KnowledgeDocument first = document("fraud-policy", "Policy on velocity signals and manual review.");
         KnowledgeDocument second = document("payment-policy", "Payment retention policy.");
         when(repository.findAll()).thenReturn(List.of(
-                KnowledgeDocumentEntity.from(first),
-                KnowledgeDocumentEntity.from(second)
+                KnowledgeDocumentEntity.from(first, embeddingProvider.embed(first.content())),
+                KnowledgeDocumentEntity.from(second, embeddingProvider.embed(second.content()))
         ));
 
         List<KnowledgeSearchResult> results = service.search("velocity review", 5);

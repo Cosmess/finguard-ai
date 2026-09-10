@@ -301,12 +301,24 @@ Entregas:
 - segredo configurável por `FINGUARD_JWT_SECRET`;
 - ADR 0010 e runbook em `docs/security.md`;
 - perfil de testes com segurança desativada para preservar os testes de domínio.
+- testes HTTP cobrem health público e endpoint financeiro sem token.
 
 Branch:
 
 ```text
 fase-11-security
 ```
+
+### Correções pós-revisão
+
+Status: implementadas nesta branch.
+
+- segurança JWT/RBAC isolada no `payment-service`;
+- segredo JWT obrigatório via `FINGUARD_JWT_SECRET`;
+- agente conectado ao `dispute-service` por leitura HTTP;
+- embeddings determinísticos persistidos e ranking híbrido no `knowledge-service`;
+- ADR 0011 registrando o hardening;
+- suíte focada de segurança, agente e conhecimento aprovada.
 
 ## Proximo ponto de retomada
 

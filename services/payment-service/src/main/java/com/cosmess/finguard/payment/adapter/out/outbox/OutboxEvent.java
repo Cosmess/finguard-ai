@@ -47,6 +47,10 @@ class OutboxEvent {
 
     private Instant publishedAt;
 
+    public Instant publishedAt() {
+        return publishedAt;
+    }
+
     protected OutboxEvent() {
     }
 

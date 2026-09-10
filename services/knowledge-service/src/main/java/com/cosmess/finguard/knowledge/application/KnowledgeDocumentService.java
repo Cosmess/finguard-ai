@@ -19,15 +19,24 @@ public class KnowledgeDocumentService {
     private static final Pattern WORD_SEPARATOR = Pattern.compile("[^\\p{L}\\p{N}]+");
     private final KnowledgeDocumentRepository repository;
     private final Clock clock;
+    private final DeterministicEmbeddingProvider embeddingProvider;
 
     @Autowired
-    public KnowledgeDocumentService(KnowledgeDocumentRepository repository) {
-        this(repository, Clock.systemUTC());
+    public KnowledgeDocumentService(
+            KnowledgeDocumentRepository repository,
+            DeterministicEmbeddingProvider embeddingProvider
+    ) {
+        this(repository, Clock.systemUTC(), embeddingProvider);
     }
 
-    KnowledgeDocumentService(KnowledgeDocumentRepository repository, Clock clock) {
+    KnowledgeDocumentService(
+            KnowledgeDocumentRepository repository,
+            Clock clock,
+            DeterministicEmbeddingProvider embeddingProvider
+    ) {
         this.repository = repository;
         this.clock = clock;
+        this.embeddingProvider = embeddingProvider;
     }
 
     @Transactional
@@ -39,7 +48,7 @@ public class KnowledgeDocumentService {
                 content,
                 clock.instant()
         );
-        return repository.save(KnowledgeDocumentEntity.from(document)).toDocument();
+        return repository.save(KnowledgeDocumentEntity.from(document, embeddingProvider.embed(content))).toDocument();
     }
 
     @Transactional(readOnly = true)
@@ -52,16 +61,21 @@ public class KnowledgeDocumentService {
         }
 
         List<String> terms = terms(query);
+        String queryEmbedding = embeddingProvider.embed(query);
         return repository.findAll().stream()
-                .map(KnowledgeDocumentEntity::toDocument)
-                .map(document -> result(document, terms))
+            .map(entity -> result(entity, terms, queryEmbedding))
                 .filter(result -> result != null)
                 .sorted(Comparator.comparingDouble(KnowledgeSearchResult::score).reversed())
                 .limit(limit)
                 .toList();
     }
 
-    private KnowledgeSearchResult result(KnowledgeDocument document, List<String> terms) {
+    private KnowledgeSearchResult result(
+            KnowledgeDocumentEntity entity,
+            List<String> terms,
+            String queryEmbedding
+    ) {
+        KnowledgeDocument document = entity.toDocument();
         String normalizedContent = document.content().toLowerCase(Locale.ROOT);
         long matches = terms.stream().filter(normalizedContent::contains).count();
         if (matches == 0) {
@@ -79,7 +93,8 @@ public class KnowledgeDocumentService {
         return new KnowledgeSearchResult(
                 document.id(),
                 document.title(),
-                (double) matches / terms.size(),
+                ((double) matches / terms.size()) * 0.7
+                    + embeddingProvider.similarity(queryEmbedding, entity.embeddingValues()) * 0.3,
                 excerpt,
                 new KnowledgeSearchResult.Citation(document.id(), document.sourceUri(), document.title())
         );
