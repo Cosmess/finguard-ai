@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 9 implementada em branch.
+Fase atual: Fase 9 concluida e mesclada na `main`.
 
 Branch atual:
 
 ```text
-fase-9-decision-service
+main
 ```
 
 PR atual:
 
 ```text
-PR ainda nao criado.
+https://github.com/Cosmess/finguard-ai/pull/9 (mesclado)
 ```
 
 ## Implementado
@@ -240,7 +240,7 @@ fase-8-agents-langchain4j
 
 ### Fase 9: decision-service
 
-Status: implementada em branch, aguardando abertura de PR.
+Status: concluida e mesclada na `main`.
 
 Entregas:
 
@@ -255,6 +255,12 @@ Branch:
 
 ```text
 fase-9-decision-service
+```
+
+PR:
+
+```text
+https://github.com/Cosmess/finguard-ai/pull/9 (mesclado)
 ```
 
 ### Fase 10: observabilidade
@@ -276,10 +282,9 @@ fase-9-decision-service
 
 ## Proximo ponto de retomada
 
-1. Criar o PR da Fase 9 para `main`.
-2. Mesclar o PR quando estiver aprovado.
-3. Criar a branch da Fase 10 para observabilidade.
-4. Atualizar este arquivo ao final da tarefa.
+1. Criar a branch da Fase 10 para observabilidade.
+2. Implementar OpenTelemetry, métricas, dashboards e runbooks.
+3. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 

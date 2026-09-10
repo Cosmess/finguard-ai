@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 9 em andamento: o `decision-service` aplica políticas determinísticas e retém casos que exigem revisão humana.
+Fase 9 concluída: o `decision-service` aplica políticas determinísticas e retém casos que exigem revisão humana.
 
 ## Modulos
 
