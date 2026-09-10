@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 3, com PR aberto.
+Fase atual: Fase 4, com branch em andamento.
 
 Branch atual:
 
 ```text
-fase-3-resiliencia-eventos
+fase-4-kafka-streams-velocidade
 ```
 
 PR atual:
 
 ```text
-https://github.com/Cosmess/finguard-ai/pull/3
+PR ainda nao criado.
 ```
 
 ## Implementado
@@ -97,7 +97,7 @@ https://github.com/Cosmess/finguard-ai/pull/2
 
 ### Fase 3: resiliencia de eventos
 
-Status: implementada em branch, aguardando merge do PR #3.
+Status: concluida e mesclada na `main`.
 
 Entregas:
 
@@ -118,27 +118,49 @@ Commits:
 5f0bab0 feat(payment): adiciona retry na outbox
 7425942 feat(fraude): configura retry e dlt no Kafka
 8932517 docs(arquitetura): documenta resiliencia de eventos
+396f3b9 docs(progresso): registra estado das fases
+```
+
+PR:
+
+```text
+https://github.com/Cosmess/finguard-ai/pull/3
+```
+
+### Fase 4: Kafka Streams e velocidade
+
+Status: implementada em branch, aguardando abertura de PR.
+
+Entregas:
+
+- dependencia `kafka-streams` no `fraud-detection-service`;
+- topologia Kafka Streams para agregar `transaction.created` por cliente;
+- janela configurada por `fraud.detection.velocity-window`;
+- contrato `FraudVelocityUpdatedEvent`;
+- publicacao de `fraud.velocity.updated`;
+- tabela `velocity_snapshots`;
+- consumo de snapshots de velocidade;
+- regra `CUSTOMER_VELOCITY` integrada ao score de fraude;
+- testes de SerDe, regras e atualizacao de snapshots.
+
+Commits:
+
+```text
+6797e4c feat(fraude): adiciona topologia de velocidade
+4b58334 feat(fraude): incorpora sinais de velocidade ao score
 ```
 
 ## Validacoes recentes
 
-Executadas na Fase 3:
+Executadas na Fase 4:
 
 ```text
-./mvnw -pl services/payment-service -am test -> BUILD SUCCESS
 ./mvnw -pl services/fraud-detection-service -am test -> BUILD SUCCESS
 ./mvnw clean verify -> BUILD SUCCESS
 docker compose config --quiet -> OK
 ```
 
 ## Falta implementar
-
-### Fase 4: Kafka Streams e velocidade
-
-- agregacoes de velocidade por janela;
-- contagem de transacoes por cliente/cartao/dispositivo;
-- sinais de multiplas recusas ou alto volume em curto periodo;
-- integracao desses sinais com score de fraude.
 
 ### Fase 5: servico de IA para fraude
 
@@ -195,10 +217,10 @@ docker compose config --quiet -> OK
 
 ## Proximo ponto de retomada
 
-1. Mesclar o PR #3 se estiver aprovado.
+1. Criar o PR da Fase 4 para `main`.
 2. Atualizar `main` local com `git switch main && git pull --ff-only`.
-3. Criar branch `fase-4-kafka-streams-velocidade`.
-4. Implementar agregacoes de velocidade com Kafka Streams.
+3. Mesclar o PR da Fase 4 quando estiver aprovado.
+4. Criar branch `fase-5-fraud-ai-service`.
 5. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
