@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 8 concluída: o `dispute-agent-service` organiza contexto de disputas com ferramentas somente leitura.
+Fase 9 em andamento: o `decision-service` aplica políticas determinísticas e retém casos que exigem revisão humana.
 
 ## Modulos
 
@@ -54,6 +54,10 @@ Endpoints principais:
 ## Agentes de disputa
 
 O `dispute-agent-service` usa LangChain4j para declarar ferramentas de consulta somente leitura. O orquestrador determinístico pode solicitar contexto, solicitar evidências ou encaminhar uma disputa com evidências para revisão manual. O agente não altera estados, cria evidências, aprova disputas nem executa chargebacks.
+
+## Decisões determinísticas
+
+O `decision-service` recebe score e nível de fraude, recomendação da IA e status de disputa em `POST /decisions`. Scores altos, risco `HIGH` ou recomendação `REVIEW_MANUALLY` produzem `HOLD_FOR_REVIEW`; sem sinais de escalonamento, o resultado é `APPROVE`. Toda decisão e seus sinais são persistidos para auditoria.
 
 ## Resiliencia de eventos
 
@@ -173,3 +177,5 @@ As decisoes iniciais estao em `docs/adr`:
 - ADR 0004: ownership de dados por servico
 - ADR 0005: resiliencia de eventos
 - ADR 0006: sinais de velocidade com Kafka Streams
+- ADR 0007: agentes de disputa somente leitura (histórico)
+- ADR 0008: agentes de disputa somente leitura (oficial da Fase 8)
