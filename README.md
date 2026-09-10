@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 3 em andamento: resiliencia de eventos com retry na outbox, DLT no Kafka, controle de duplicidade e metricas basicas.
+Fase 4 em andamento: Kafka Streams calcula sinais de velocidade por janela e o `fraud-detection-service` incorpora alto volume recente ao score de fraude.
 
 ## Modulos
 
@@ -47,6 +47,14 @@ O `fraud-detection-service` usa uma tabela de transacoes processadas para evitar
 
 Metricas Micrometer acompanham publicacoes da outbox, falhas da outbox, mensagens consumidas, mensagens publicadas e mensagens enviadas para DLT.
 
+## Velocidade de transacoes
+
+O `fraud-detection-service` usa Kafka Streams para agregar `transaction.created` em janelas de 10 minutos por cliente. Cada atualizacao gera `FraudVelocityUpdated` em `fraud.velocity.updated`.
+
+O proprio servico consome esse evento, persiste o snapshot em `velocity_snapshots` e usa o sinal `CUSTOMER_VELOCITY` no motor de regras quando o volume recente do cliente ultrapassa o limite configurado no codigo da fase.
+
+Sinais de recusas em janela curta ainda dependem de eventos de transacao recusada, que serao adicionados quando o fluxo de autorizacao ganhar estados de recusa.
+
 ## Arquitetura
 
 ```mermaid
@@ -59,6 +67,7 @@ flowchart LR
 
     Kafka -->|transaction.created| FraudDetection[fraud-detection-service]
     FraudDetection -->|fraud.suspected| Kafka
+    FraudDetection -->|fraud.velocity.updated| Kafka
     Kafka --> FraudAi[fraud-ai-service]
     Kafka --> Dispute[dispute-service]
     Kafka --> Decision[decision-service]
@@ -139,3 +148,4 @@ As decisoes iniciais estao em `docs/adr`:
 - ADR 0003: IA sem autoridade transacional
 - ADR 0004: ownership de dados por servico
 - ADR 0005: resiliencia de eventos
+- ADR 0006: sinais de velocidade com Kafka Streams

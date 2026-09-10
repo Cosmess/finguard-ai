@@ -13,6 +13,11 @@ spring:
     open-in-view: false
   kafka:
     bootstrap-servers: localhost:29092
+    streams:
+      application-id: fraud-detection-velocity-streams
+      properties:
+        default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+        default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
     consumer:
       group-id: fraud-detection-service
       auto-offset-reset: earliest
@@ -41,6 +46,8 @@ fraud:
     input-topic: transaction.created
     output-topic: fraud.suspected
     dlt-topic: transaction.created.dlt
+    velocity-topic: fraud.velocity.updated
+    velocity-window: 10m
     retry:
       max-attempts: 3
       backoff: 1s

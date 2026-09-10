@@ -5,13 +5,14 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class FraudRulesEngineTest {
 
-    private final FraudRulesEngine engine = new FraudRulesEngine();
+    private final FraudRulesEngine engine = new FraudRulesEngine(customerId -> Optional.empty());
 
     @Test
     void classifiesHighRiskWhenHighValueNewDeviceAndUnusualHourMatch() {
@@ -38,6 +39,17 @@ class FraudRulesEngineTest {
         assertThat(assessment.score()).isZero();
         assertThat(assessment.riskLevel()).isEqualTo(RiskLevel.LOW);
         assertThat(assessment.triggeredRules()).isEmpty();
+    }
+
+    @Test
+    void addsVelocitySignalToScoreWhenCustomerHasHighVolume() {
+        FraudRulesEngine velocityEngine = new FraudRulesEngine(customerId -> Optional.of(new VelocitySignal(6)));
+
+        FraudAssessment assessment = velocityEngine.assess(transaction(new BigDecimal("100.00"), "known-device-1", "2026-09-10T14:00:00Z"));
+
+        assertThat(assessment.score()).isEqualTo(35);
+        assertThat(assessment.riskLevel()).isEqualTo(RiskLevel.MEDIUM);
+        assertThat(assessment.triggeredRules()).containsExactly("CUSTOMER_VELOCITY");
     }
 
     private TransactionCreatedEvent transaction(BigDecimal amount, String deviceId, String createdAt) {

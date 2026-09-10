@@ -9,6 +9,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
@@ -66,7 +67,7 @@ class FraudDetectionServiceTest {
             InMemoryFraudEventPublisher publisher
     ) {
         return new FraudDetectionService(
-                new FraudRulesEngine(),
+                new FraudRulesEngine(customerId -> Optional.empty()),
                 fraudCases,
                 processed,
                 publisher,

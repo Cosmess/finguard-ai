@@ -9,17 +9,27 @@ import java.util.Optional;
 @Component
 public class FraudRulesEngine {
 
-    private final List<FraudRule> rules = List.of(
-            new HighValueRule(),
-            new NewDeviceRule(),
-            new UnusualHourRule()
-    );
+    private final VelocitySignalProvider velocitySignalProvider;
+    private final List<FraudRule> rules;
+
+    public FraudRulesEngine(VelocitySignalProvider velocitySignalProvider) {
+        this.velocitySignalProvider = velocitySignalProvider;
+        this.rules = List.of(
+                new HighValueRule(),
+                new NewDeviceRule(),
+                new UnusualHourRule()
+        );
+    }
 
     public FraudAssessment assess(TransactionCreatedEvent transaction) {
         List<FraudRuleResult> results = rules.stream()
                 .map(rule -> rule.evaluate(transaction))
                 .flatMap(Optional::stream)
-                .toList();
+                .collect(java.util.stream.Collectors.toCollection(java.util.ArrayList::new));
+
+        velocitySignalProvider.customerVelocity(transaction.customerId())
+                .filter(signal -> signal.transactionCount() >= 5)
+                .ifPresent(signal -> results.add(new FraudRuleResult("CUSTOMER_VELOCITY", 35)));
 
         int score = results.stream().mapToInt(FraudRuleResult::score).sum();
         List<String> triggeredRules = results.stream().map(FraudRuleResult::ruleName).toList();
