@@ -21,6 +21,17 @@ Fase 11 concluída: o `payment-service` exige JWT e RBAC por padrão.
 - `services/knowledge-service`: base de conhecimento e RAG.
 - `services/notification-service`: notificacoes operacionais.
 
+## Documentacao por servico
+
+- [payment-service](docs/services/payment-service/README.md)
+- [fraud-detection-service](docs/services/fraud-detection-service/README.md)
+- [fraud-ai-service](docs/services/fraud-ai-service/README.md)
+- [dispute-service](docs/services/dispute-service/README.md)
+- [dispute-agent-service](docs/services/dispute-agent-service/README.md)
+- [decision-service](docs/services/decision-service/README.md)
+- [knowledge-service](docs/services/knowledge-service/README.md)
+- [notification-service](docs/services/notification-service/README.md)
+
 ## O que cada servico faz
 
 `payment-service` recebe transacoes, valida os dados de entrada, persiste o registro financeiro e grava o evento `TransactionCreated` na outbox. Ele e o ponto inicial do fluxo e nao decide fraude sozinho.
