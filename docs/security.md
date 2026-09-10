@@ -19,4 +19,4 @@ O token JWT deve conter uma claim `roles`, por exemplo `['PAYMENT']`. Para consu
 
 ## Limites
 
-O slice atual usa segredo HMAC configurável e não implementa login, emissão de tokens, rotação automática ou integração com um provedor de identidade. O segredo de fallback do arquivo de desenvolvimento não deve ser usado em ambientes compartilhados.
+O slice atual usa segredo HMAC obrigatório e não implementa login, emissão de tokens, rotação automática ou integração com um provedor de identidade. `FINGUARD_JWT_SECRET` deve ser definido antes de iniciar o `payment-service`.

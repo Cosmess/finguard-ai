@@ -1,7 +1,6 @@
-package com.cosmess.finguard.observability;
+package com.cosmess.finguard.payment.config;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -16,14 +15,12 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
-import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Configuration
 @EnableMethodSecurity
-@ConditionalOnProperty(prefix = "security.jwt", name = "enabled", havingValue = "true")
 public class SecurityConfiguration {
 
     @Bean
@@ -45,8 +42,9 @@ public class SecurityConfiguration {
 
     @Bean
     JwtDecoder jwtDecoder(@Value("${security.jwt.secret}") String secret) {
-        SecretKey key = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256");
-        return NimbusJwtDecoder.withSecretKey(key).build();
+        return NimbusJwtDecoder.withSecretKey(
+                new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256")
+        ).build();
     }
 
     @Bean

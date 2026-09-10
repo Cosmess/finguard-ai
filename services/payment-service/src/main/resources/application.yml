@@ -40,4 +40,4 @@ payment:
 security:
   jwt:
     enabled: true
-    secret: ${FINGUARD_JWT_SECRET:change-this-local-secret-to-a-32-byte-value}
+    secret: ${FINGUARD_JWT_SECRET}

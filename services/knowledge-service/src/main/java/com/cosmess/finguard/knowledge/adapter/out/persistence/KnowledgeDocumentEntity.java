@@ -21,25 +21,32 @@ public class KnowledgeDocumentEntity {
     private String sourceUri;
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
+    @Column(nullable = false, columnDefinition = "TEXT")
+    private String embeddingValues;
     @Column(nullable = false)
     private Instant createdAt;
 
     protected KnowledgeDocumentEntity() {
     }
 
-    private KnowledgeDocumentEntity(KnowledgeDocument document) {
+    private KnowledgeDocumentEntity(KnowledgeDocument document, String embeddingValues) {
         this.id = document.id();
         this.title = document.title();
         this.sourceUri = document.sourceUri();
         this.content = document.content();
+        this.embeddingValues = embeddingValues;
         this.createdAt = document.createdAt();
     }
 
-    public static KnowledgeDocumentEntity from(KnowledgeDocument document) {
-        return new KnowledgeDocumentEntity(document);
+    public static KnowledgeDocumentEntity from(KnowledgeDocument document, String embeddingValues) {
+        return new KnowledgeDocumentEntity(document, embeddingValues);
     }
 
     public KnowledgeDocument toDocument() {
         return new KnowledgeDocument(id, title, sourceUri, content, createdAt);
+    }
+
+    public String embeddingValues() {
+        return embeddingValues;
     }
 }
