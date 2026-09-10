@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 1 em andamento: `payment-service` com criacao/consulta de transacoes, persistencia PostgreSQL, Flyway e outbox para publicacao de `TransactionCreated` no Kafka.
+Fase 2 em andamento: `payment-service` publica `TransactionCreated` via outbox e `fraud-detection-service` aplica regras deterministicas para emitir `FraudSuspected`.
 
 ## Modulos
 
@@ -29,9 +29,10 @@ flowchart LR
 
     Payment --> PaymentDb[(finguard_payment)]
     Payment --> Outbox[(outbox_events)]
-    Outbox --> Kafka[(Kafka)]
+    Outbox -->|transaction.created| Kafka[(Kafka)]
 
-    Kafka --> FraudDetection[fraud-detection-service]
+    Kafka -->|transaction.created| FraudDetection[fraud-detection-service]
+    FraudDetection -->|fraud.suspected| Kafka
     Kafka --> FraudAi[fraud-ai-service]
     Kafka --> Dispute[dispute-service]
     Kafka --> Decision[decision-service]

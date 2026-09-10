@@ -37,6 +37,8 @@ class PostgresTransactionEventRecorder implements TransactionEventRecorder {
                 transaction.amount(),
                 transaction.currency(),
                 transaction.paymentMethod().name(),
+                transaction.deviceId(),
+                transaction.ipAddress(),
                 transaction.status().name(),
                 transaction.createdAt()
         );
