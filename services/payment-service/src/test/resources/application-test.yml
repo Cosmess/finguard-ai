@@ -1,3 +1,7 @@
 payment:
   outbox:
     publishing-enabled: false
+
+security:
+  jwt:
+    enabled: false

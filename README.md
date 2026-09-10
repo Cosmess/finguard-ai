@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 10 concluída: os serviços expõem métricas Prometheus e correlação HTTP para operação local.
+Fase 11 em andamento: o `payment-service` exige JWT e RBAC por padrão.
 
 ## Modulos
 
@@ -62,6 +62,10 @@ O `decision-service` recebe score e nível de fraude, recomendação da IA e sta
 ## Observabilidade
 
 Todos os serviços expõem `/actuator/prometheus` e preservam ou geram `X-Correlation-Id`. O Compose local inclui Prometheus em `http://localhost:9090` e Grafana em `http://localhost:3000`. O runbook está em `docs/observability.md`.
+
+## Segurança
+
+O `payment-service` usa JWT como resource server. A claim `roles` é convertida para `ROLE_*`: métricas exigem `OPS`, caminhos administrativos exigem `ADMIN` e os demais endpoints exigem autenticação. Configure `FINGUARD_JWT_SECRET` antes de iniciar o serviço. O runbook está em `docs/security.md`.
 
 ## Resiliencia de eventos
 
