@@ -310,7 +310,7 @@ fase-11-security
 
 ## Proximo ponto de retomada
 
-Projeto concluido conforme o escopo definido. A Fase 12 foi removida e nao sera implementada.
+Projeto concluido conforme o escopo definido.
 
 ## Pendencias e observacoes
 
