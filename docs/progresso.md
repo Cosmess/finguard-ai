@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 10 implementada em branch.
+Fase atual: Fase 10 concluida e mesclada na `main`.
 
 Branch atual:
 
 ```text
-fase-10-observability
+main
 ```
 
 PR atual:
 
 ```text
-PR ainda nao criado.
+https://github.com/Cosmess/finguard-ai/pull/10 (mesclado)
 ```
 
 ## Implementado
@@ -265,7 +265,7 @@ https://github.com/Cosmess/finguard-ai/pull/9 (mesclado)
 
 ### Fase 10: observabilidade
 
-Status: implementada em branch, aguardando abertura de PR.
+Status: concluida e mesclada na `main`.
 
 Entregas:
 
@@ -283,6 +283,12 @@ Branch:
 fase-10-observability
 ```
 
+PR:
+
+```text
+https://github.com/Cosmess/finguard-ai/pull/10 (mesclado)
+```
+
 ### Fase 11: seguranca
 
 - JWT;
@@ -295,10 +301,9 @@ fase-10-observability
 
 ## Proximo ponto de retomada
 
-1. Criar o PR da Fase 10 para `main`.
-2. Mesclar o PR quando estiver aprovado.
-3. Criar a branch da Fase 11 para segurança.
-4. Atualizar este arquivo ao final da tarefa.
+1. Criar a branch da Fase 11 para segurança.
+2. Implementar JWT, RBAC e configuração Spring Security.
+3. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 

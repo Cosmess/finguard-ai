@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 10 em andamento: os serviços expõem métricas Prometheus e correlação HTTP para operação local.
+Fase 10 concluída: os serviços expõem métricas Prometheus e correlação HTTP para operação local.
 
 ## Modulos
 
