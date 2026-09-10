@@ -57,7 +57,7 @@ Portas locais planejadas:
 
 O `docker-compose.yml` sobe:
 
-- PostgreSQL na porta `5432`
+- PostgreSQL 17 na porta `5432`
 - Kafka na porta `29092`
 - Redis na porta `6379`
 
