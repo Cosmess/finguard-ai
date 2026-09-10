@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 0 em andamento: base do monorepo, infraestrutura local e servicos minimos com health check.
+Fase 1 em andamento: `payment-service` com criacao/consulta de transacoes, persistencia PostgreSQL, Flyway e outbox para publicacao de `TransactionCreated` no Kafka.
 
 ## Modulos
 
@@ -20,6 +20,46 @@ Fase 0 em andamento: base do monorepo, infraestrutura local e servicos minimos c
 - `services/decision-service`: politicas deterministicas de decisao.
 - `services/knowledge-service`: base de conhecimento e RAG.
 - `services/notification-service`: notificacoes operacionais.
+
+## Arquitetura
+
+```mermaid
+flowchart LR
+    Client[Cliente/API Consumer] --> Payment[payment-service]
+
+    Payment --> PaymentDb[(finguard_payment)]
+    Payment --> Outbox[(outbox_events)]
+    Outbox --> Kafka[(Kafka)]
+
+    Kafka --> FraudDetection[fraud-detection-service]
+    Kafka --> FraudAi[fraud-ai-service]
+    Kafka --> Dispute[dispute-service]
+    Kafka --> Decision[decision-service]
+    Kafka --> Notification[notification-service]
+
+    FraudDetection --> FraudDb[(finguard_fraud_detection)]
+    FraudAi --> FraudAiDb[(finguard_fraud_ai)]
+    Dispute --> DisputeDb[(finguard_dispute)]
+    Decision --> DecisionDb[(finguard_decision)]
+    Knowledge[knowledge-service] --> KnowledgeDb[(finguard_knowledge)]
+    Notification --> NotificationDb[(finguard_notification)]
+    DisputeAgent[dispute-agent-service] --> DisputeAgentDb[(finguard_dispute_agent)]
+
+    FraudAi --> Knowledge
+    DisputeAgent --> Knowledge
+    DisputeAgent --> Dispute
+
+    Redis[(Redis)] --> FraudDetection
+    Redis --> FraudAi
+
+    classDef service fill:#eef6ff,stroke:#2563eb,color:#111827
+    classDef datastore fill:#f8fafc,stroke:#64748b,color:#111827
+    classDef eventbus fill:#fff7ed,stroke:#ea580c,color:#111827
+
+    class Payment,FraudDetection,FraudAi,Dispute,DisputeAgent,Decision,Knowledge,Notification service
+    class PaymentDb,Outbox,FraudDb,FraudAiDb,DisputeDb,DisputeAgentDb,DecisionDb,KnowledgeDb,NotificationDb,Redis datastore
+    class Kafka eventbus
+```
 
 ## Requisitos locais
 
@@ -57,7 +97,7 @@ Portas locais planejadas:
 
 O `docker-compose.yml` sobe:
 
-- PostgreSQL na porta `5432`
+- PostgreSQL 17 na porta `5432`
 - Kafka na porta `29092`
 - Redis na porta `6379`
 

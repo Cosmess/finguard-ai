@@ -1,6 +1,21 @@
 spring:
   application:
     name: payment-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/finguard_payment
+    username: finguard
+    password: finguard
+  flyway:
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  kafka:
+    bootstrap-servers: localhost:29092
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 
 server:
   port: 8081
@@ -14,3 +29,9 @@ management:
     health:
       probes:
         enabled: true
+
+payment:
+  outbox:
+    publishing-enabled: true
+    topic: transaction.created
+    fixed-delay: 5s
