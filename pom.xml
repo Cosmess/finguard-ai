@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.1.1</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.cosmess.finguard</groupId>
+    <artifactId>finguard-ai</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>finguard-ai</name>
+    <description>Event-driven fraud detection and dispute intelligence platform.</description>
+
+    <modules>
+        <module>libs/event-contracts</module>
+        <module>libs/common-observability</module>
+        <module>services/payment-service</module>
+        <module>services/fraud-detection-service</module>
+        <module>services/fraud-ai-service</module>
+        <module>services/dispute-service</module>
+        <module>services/dispute-agent-service</module>
+        <module>services/decision-service</module>
+        <module>services/knowledge-service</module>
+        <module>services/notification-service</module>
+    </modules>
+
+    <properties>
+        <java.version>25</java.version>
+        <spring-ai.version>2.0.1</spring-ai.version>
+        <kafka.version>4.3.1</kafka.version>
+        <langchain4j.version>1.15.1</langchain4j.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-bom</artifactId>
+                <version>${spring-ai.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
