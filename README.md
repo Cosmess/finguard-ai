@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 11 em andamento: o `payment-service` exige JWT e RBAC por padrão.
+Fase 11 concluída: o `payment-service` exige JWT e RBAC por padrão.
 
 ## Modulos
 

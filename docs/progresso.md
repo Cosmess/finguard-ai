@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 11 implementada em branch.
+Fase atual: Fase 11 concluida e mesclada na `main`.
 
 Branch atual:
 
 ```text
-fase-11-security
+main
 ```
 
 PR atual:
 
 ```text
-PR ainda nao criado.
+https://github.com/Cosmess/finguard-ai/pull/11 (mesclado)
 ```
 
 ## Implementado
@@ -290,7 +290,7 @@ https://github.com/Cosmess/finguard-ai/pull/10 (mesclado)
 
 ### Fase 11: seguranca
 
-Status: implementada em branch, aguardando abertura de PR.
+Status: concluida e mesclada na `main`.
 
 Entregas:
 
@@ -310,9 +310,7 @@ fase-11-security
 
 ## Proximo ponto de retomada
 
-1. Criar o PR da Fase 11 para `main`.
-2. Mesclar o PR quando estiver aprovado.
-3. Atualizar este arquivo ao final da tarefa.
+Projeto concluido conforme o escopo definido. A Fase 12 foi removida e nao sera implementada.
 
 ## Pendencias e observacoes
 
