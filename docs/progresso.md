@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 6 concluida e mesclada na `main`.
+Fase atual: Fase 7 implementada em branch.
 
 Branch atual:
 
 ```text
-main
+fase-7-disputes
 ```
 
 PR atual:
 
 ```text
-https://github.com/Cosmess/finguard-ai/pull/6 (mesclado)
+PR ainda nao criado.
 ```
 
 ## Implementado
@@ -152,13 +152,11 @@ Commits:
 
 ## Validacoes recentes
 
-Executadas na Fase 6:
+Executadas na Fase 7:
 
 ```text
-./mvnw -pl services/fraud-ai-service -am test -> BUILD SUCCESS (4 testes)
-./mvnw clean -pl services/knowledge-service -am test -> BUILD SUCCESS (3 testes)
+./mvnw clean -pl services/dispute-service -am test -> BUILD SUCCESS (3 testes)
 ./mvnw clean verify -> BUILD SUCCESS
-docker compose config --quiet -> OK
 ```
 
 ## Falta implementar
@@ -203,10 +201,22 @@ fase-6-knowledge-service-rag
 
 ### Fase 7: disputas
 
-- agregado de disputa;
-- evidencias;
-- estados do ciclo de vida;
-- revisao humana.
+Status: implementada em branch, aguardando abertura de PR.
+
+Entregas:
+
+- agregado de disputa com persistencia própria;
+- estados `OPEN`, `EVIDENCE_REQUESTED`, `UNDER_REVIEW`, `RESOLVED` e `REJECTED`;
+- registro de evidências com referência auditável;
+- revisão humana explícita com decisão `APPROVE` ou `REJECT`;
+- endpoints REST para abertura, consulta, evidências e revisão;
+- testes determinísticos de ciclo de vida e transições inválidas.
+
+Branch:
+
+```text
+fase-7-disputes
+```
 
 ### Fase 8: agentes com LangChain4j
 
@@ -240,9 +250,10 @@ fase-6-knowledge-service-rag
 
 ## Proximo ponto de retomada
 
-1. Criar a branch da Fase 7 para disputas.
-2. Implementar o agregado de disputa, evidencias, estados do ciclo de vida e revisao humana.
-3. Atualizar este arquivo ao final da tarefa.
+1. Criar o PR da Fase 7 para `main`.
+2. Mesclar o PR quando estiver aprovado.
+3. Criar a branch da Fase 8 para agentes com LangChain4j.
+4. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 

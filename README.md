@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 6 concluída: o `knowledge-service` ingere documentos e retorna contexto com citações rastreáveis.
+Fase 7 em andamento: o `dispute-service` gerencia disputas, evidências e revisão humana.
 
 ## Modulos
 
@@ -38,6 +38,18 @@ Fase 6 concluída: o `knowledge-service` ingere documentos e retorna contexto co
 `knowledge-service` mantera a base de conhecimento usada por RAG, com documentos, politicas, embeddings e citacoes. Ele ajuda os servicos de IA a responder com contexto rastreavel.
 
 `notification-service` enviara comunicacoes operacionais, como alertas de fraude, eventos de disputa e notificacoes internas para revisao humana.
+
+## Disputas
+
+O `dispute-service` abre disputas para transações, registra evidências e controla o ciclo de vida `OPEN`, `EVIDENCE_REQUESTED`, `UNDER_REVIEW`, `RESOLVED` e `REJECTED`. A revisão exige um identificador humano e uma decisão explícita; o serviço não aprova ou executa chargebacks diretamente.
+
+Endpoints principais:
+
+- `POST /disputes`: abre uma disputa;
+- `GET /disputes/{id}`: consulta a disputa e suas evidências;
+- `POST /disputes/{id}/evidence-request`: solicita evidências;
+- `POST /disputes/{id}/evidence`: anexa uma evidência;
+- `POST /disputes/{id}/review`: registra a revisão humana.
 
 ## Resiliencia de eventos
 
