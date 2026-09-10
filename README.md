@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 5 em andamento: o `fraud-ai-service` investiga eventos suspeitos com recomendações determinísticas e auditáveis.
+Fase 5 concluída: o `fraud-ai-service` investiga eventos suspeitos com recomendações determinísticas e auditáveis.
 
 ## Modulos
 

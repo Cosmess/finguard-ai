@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 5 implementada em branch.
+Fase atual: Fase 5 concluida e mesclada na `main`.
 
 Branch atual:
 
 ```text
-fase-5-fraud-ai-service
+main
 ```
 
 PR atual:
 
 ```text
-PR ainda nao criado.
+https://github.com/Cosmess/finguard-ai/pull/5 (mesclado)
 ```
 
 ## Implementado
@@ -163,7 +163,7 @@ Executadas na Fase 5:
 
 ### Fase 5: servico de IA para fraude
 
-Status: implementada em branch, aguardando abertura de PR.
+Status: concluida e mesclada na `main`.
 
 Entregas:
 
@@ -227,10 +227,9 @@ fase-5-fraud-ai-service
 
 ## Proximo ponto de retomada
 
-1. Criar o PR da Fase 5 para `main`.
-2. Mesclar o PR quando estiver aprovado.
-3. Criar a branch da Fase 6 para `knowledge-service` e RAG.
-4. Atualizar este arquivo ao final da tarefa.
+1. Criar a branch da Fase 6 para `knowledge-service` e RAG.
+2. Implementar ingestao de documentos, busca com citacoes e testes deterministicos.
+3. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 
