@@ -6,6 +6,8 @@ import com.cosmess.finguard.fraud.detection.application.FraudCase;
 import com.cosmess.finguard.fraud.detection.application.FraudEventPublisher;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
@@ -21,15 +23,21 @@ class KafkaFraudEventPublisher implements FraudEventPublisher {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
     private final String outputTopic;
+    private final Counter publishedCounter;
 
     KafkaFraudEventPublisher(
             KafkaTemplate<String, String> kafkaTemplate,
             ObjectMapper objectMapper,
-            @Value("${fraud.detection.output-topic}") String outputTopic
+            @Value("${fraud.detection.output-topic}") String outputTopic,
+            MeterRegistry meterRegistry
     ) {
         this.kafkaTemplate = kafkaTemplate;
         this.objectMapper = objectMapper;
         this.outputTopic = outputTopic;
+        this.publishedCounter = Counter.builder("finguard.kafka.messages.published")
+                .tag("service", "fraud-detection-service")
+                .tag("topic", outputTopic)
+                .register(meterRegistry);
     }
 
     @Override
@@ -56,6 +64,7 @@ class KafkaFraudEventPublisher implements FraudEventPublisher {
         try {
             String payload = objectMapper.writeValueAsString(envelope);
             kafkaTemplate.send(outputTopic, fraudCase.transactionId().toString(), payload).get(10, TimeUnit.SECONDS);
+            publishedCounter.increment();
         } catch (JsonProcessingException exception) {
             throw new IllegalStateException("Could not serialize fraud event", exception);
         } catch (Exception exception) {

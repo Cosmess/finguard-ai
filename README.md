@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 2 em andamento: `payment-service` publica `TransactionCreated` via outbox e `fraud-detection-service` aplica regras deterministicas para emitir `FraudSuspected`.
+Fase 3 em andamento: resiliencia de eventos com retry na outbox, DLT no Kafka, controle de duplicidade e metricas basicas.
 
 ## Modulos
 
@@ -38,6 +38,14 @@ Fase 2 em andamento: `payment-service` publica `TransactionCreated` via outbox e
 `knowledge-service` mantera a base de conhecimento usada por RAG, com documentos, politicas, embeddings e citacoes. Ele ajuda os servicos de IA a responder com contexto rastreavel.
 
 `notification-service` enviara comunicacoes operacionais, como alertas de fraude, eventos de disputa e notificacoes internas para revisao humana.
+
+## Resiliencia de eventos
+
+O `payment-service` usa outbox transacional para evitar perda de eventos: a transacao e o evento `TransactionCreated` sao gravados na mesma transacao de banco. Um publisher agendado tenta publicar eventos pendentes no Kafka, registra tentativas, guarda o ultimo erro e marca o evento como `FAILED` quando excede o limite configurado.
+
+O `fraud-detection-service` usa uma tabela de transacoes processadas para evitar reprocessamento do mesmo `transactionId`. Falhas no consumo de `transaction.created` passam por retry com backoff fixo e, se continuarem falhando, sao enviadas para `transaction.created.dlt`.
+
+Metricas Micrometer acompanham publicacoes da outbox, falhas da outbox, mensagens consumidas, mensagens publicadas e mensagens enviadas para DLT.
 
 ## Arquitetura
 
@@ -130,3 +138,4 @@ As decisoes iniciais estao em `docs/adr`:
 - ADR 0002: arquitetura orientada a eventos
 - ADR 0003: IA sem autoridade transacional
 - ADR 0004: ownership de dados por servico
+- ADR 0005: resiliencia de eventos

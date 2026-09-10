@@ -1,0 +1,208 @@
+# Progresso do FinGuard AI
+
+Este arquivo registra o que ja foi implementado, o que ainda falta e qual e o melhor ponto para retomar o trabalho.
+
+## Como usar este documento
+
+Ao final de cada tarefa, atualize:
+
+- a fase atual;
+- os PRs e commits relevantes;
+- as validacoes executadas;
+- o proximo passo recomendado;
+- qualquer pendencia tecnica ou decisao aberta.
+
+## Estado atual
+
+Fase atual: Fase 3, com PR aberto.
+
+Branch atual:
+
+```text
+fase-3-resiliencia-eventos
+```
+
+PR atual:
+
+```text
+https://github.com/Cosmess/finguard-ai/pull/3
+```
+
+## Implementado
+
+### Fase 0: base do monorepo
+
+Status: concluida e mesclada na `main`.
+
+Entregas:
+
+- monorepo Maven com Java 25;
+- oito servicos Spring Boot minimos;
+- bibliotecas `event-contracts` e `common-observability`;
+- `docker-compose.yml` com PostgreSQL, Kafka e Redis;
+- bancos separados por servico no PostgreSQL;
+- health check via Actuator;
+- README inicial em portugues;
+- ADRs 0001 a 0004.
+
+### Fase 1: fluxo inicial de transacoes
+
+Status: concluida e mesclada na `main`.
+
+Entregas:
+
+- `payment-service` com agregado `Transaction`;
+- endpoint `POST /transactions`;
+- endpoint `GET /transactions/{id}`;
+- validacao de entrada;
+- tratamento de erro com `ProblemDetail`;
+- persistencia com JPA e Flyway;
+- tabela `transactions`;
+- tabela `outbox_events`;
+- contrato `TransactionCreatedEvent`;
+- gravação da outbox na mesma transacao do banco;
+- publisher Kafka agendado para `transaction.created`;
+- testes de dominio e integracao com Testcontainers.
+
+PR:
+
+```text
+https://github.com/Cosmess/finguard-ai/pull/1
+```
+
+### Fase 2: deteccao deterministica de fraude
+
+Status: concluida e mesclada na `main`.
+
+Entregas:
+
+- `fraud-detection-service` com JPA, Flyway, PostgreSQL e Kafka;
+- contrato `FraudSuspectedEvent`;
+- `TransactionCreatedEvent` enriquecido com `deviceId` e `ipAddress`;
+- regras deterministicas `HIGH_VALUE`, `NEW_DEVICE` e `UNUSUAL_HOUR`;
+- score e classificacao `LOW`, `MEDIUM` e `HIGH`;
+- tabela `fraud_cases`;
+- tabela `processed_transactions`;
+- consumidor de `transaction.created`;
+- publicador de `fraud.suspected`;
+- protecao contra duplicidade por `transactionId`;
+- README atualizado com diagrama Mermaid e responsabilidades dos servicos;
+- testes de regras, aplicacao e contexto com Testcontainers.
+
+PR:
+
+```text
+https://github.com/Cosmess/finguard-ai/pull/2
+```
+
+### Fase 3: resiliencia de eventos
+
+Status: implementada em branch, aguardando merge do PR #3.
+
+Entregas:
+
+- retry na outbox do `payment-service`;
+- campos `attempts`, `last_error` e status `FAILED` para eventos da outbox;
+- limite configuravel `payment.outbox.max-attempts`;
+- metricas Micrometer para eventos publicados e falhas de outbox;
+- `CommonErrorHandler` no `fraud-detection-service`;
+- retry com backoff fixo para consumo Kafka;
+- envio de falhas persistentes para `transaction.created.dlt`;
+- metricas para mensagens consumidas, publicadas e enviadas para DLT;
+- ADR 0005 sobre resiliencia de eventos;
+- README atualizado com a Fase 3.
+
+Commits:
+
+```text
+5f0bab0 feat(payment): adiciona retry na outbox
+7425942 feat(fraude): configura retry e dlt no Kafka
+8932517 docs(arquitetura): documenta resiliencia de eventos
+```
+
+## Validacoes recentes
+
+Executadas na Fase 3:
+
+```text
+./mvnw -pl services/payment-service -am test -> BUILD SUCCESS
+./mvnw -pl services/fraud-detection-service -am test -> BUILD SUCCESS
+./mvnw clean verify -> BUILD SUCCESS
+docker compose config --quiet -> OK
+```
+
+## Falta implementar
+
+### Fase 4: Kafka Streams e velocidade
+
+- agregacoes de velocidade por janela;
+- contagem de transacoes por cliente/cartao/dispositivo;
+- sinais de multiplas recusas ou alto volume em curto periodo;
+- integracao desses sinais com score de fraude.
+
+### Fase 5: servico de IA para fraude
+
+- `fraud-ai-service` com stub deterministico inicial;
+- respostas estruturadas e validadas;
+- ferramentas somente leitura;
+- auditoria das recomendacoes;
+- nenhuma chave de provedor externo em CI.
+
+### Fase 6: knowledge-service e RAG
+
+- base de conhecimento;
+- pgvector;
+- ingestao de documentos;
+- busca com citacoes;
+- testes deterministicos.
+
+### Fase 7: disputas
+
+- agregado de disputa;
+- evidencias;
+- estados do ciclo de vida;
+- revisao humana.
+
+### Fase 8: agentes com LangChain4j
+
+- agentes apenas depois das bases deterministicas;
+- orquestracao explicita;
+- limites claros de ferramentas e permissoes.
+
+### Fase 9: decision-service
+
+- politicas deterministicas;
+- thresholds;
+- revisao humana;
+- decisao a partir de sinais de fraude, IA e disputa.
+
+### Fase 10: observabilidade
+
+- OpenTelemetry;
+- Prometheus;
+- Grafana;
+- dashboards e runbooks.
+
+### Fase 11: seguranca
+
+- JWT;
+- RBAC;
+- configuracao Spring Security.
+
+### Fase 12: frontend opcional
+
+- interface Next.js somente depois do backend estabilizar.
+
+## Proximo ponto de retomada
+
+1. Mesclar o PR #3 se estiver aprovado.
+2. Atualizar `main` local com `git switch main && git pull --ff-only`.
+3. Criar branch `fase-4-kafka-streams-velocidade`.
+4. Implementar agregacoes de velocidade com Kafka Streams.
+5. Atualizar este arquivo ao final da tarefa.
+
+## Pendencias e observacoes
+
+- O projeto usa `postgres:17-alpine`, porque o Flyway disponivel no Spring Boot 4.1.1 nao aceitou PostgreSQL 18 durante os testes.
+- Nao foi executado `docker compose down --volumes`, pois isso apagaria dados locais do PostgreSQL.
+- O README e a documentacao podem ficar em portugues; nomes de classes, metodos, APIs e eventos seguem em ingles.

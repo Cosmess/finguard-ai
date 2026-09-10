@@ -19,6 +19,8 @@ CREATE TABLE outbox_events (
     topic VARCHAR(120) NOT NULL,
     payload TEXT NOT NULL,
     status VARCHAR(30) NOT NULL,
+    attempts INTEGER NOT NULL DEFAULT 0,
+    last_error TEXT,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL,
     published_at TIMESTAMP WITH TIME ZONE
 );
