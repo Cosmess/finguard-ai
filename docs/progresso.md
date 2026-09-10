@@ -14,7 +14,7 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 4, com branch em andamento.
+Fase atual: Fase 4 concluida e mesclada na `main`.
 
 Branch atual:
 
@@ -25,7 +25,7 @@ fase-4-kafka-streams-velocidade
 PR atual:
 
 ```text
-PR ainda nao criado.
+https://github.com/Cosmess/finguard-ai/pull/4 (mesclado)
 ```
 
 ## Implementado
@@ -129,7 +129,7 @@ https://github.com/Cosmess/finguard-ai/pull/3
 
 ### Fase 4: Kafka Streams e velocidade
 
-Status: implementada em branch, aguardando abertura de PR.
+Status: concluida e mesclada na `main`.
 
 Entregas:
 
@@ -217,11 +217,9 @@ docker compose config --quiet -> OK
 
 ## Proximo ponto de retomada
 
-1. Criar o PR da Fase 4 para `main`.
-2. Atualizar `main` local com `git switch main && git pull --ff-only`.
-3. Mesclar o PR da Fase 4 quando estiver aprovado.
-4. Criar branch `fase-5-fraud-ai-service`.
-5. Atualizar este arquivo ao final da tarefa.
+1. Criar branch `fase-5-fraud-ai-service` a partir da `main` atualizada.
+2. Implementar o stub deterministico inicial do `fraud-ai-service`.
+3. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 
