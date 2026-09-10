@@ -40,3 +40,7 @@ fraud:
     enabled: true
     input-topic: transaction.created
     output-topic: fraud.suspected
+    dlt-topic: transaction.created.dlt
+    retry:
+      max-attempts: 3
+      backoff: 1s
