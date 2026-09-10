@@ -1,6 +1,23 @@
 spring:
   application:
     name: fraud-ai-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/finguard_fraud_ai
+    username: finguard
+    password: finguard
+  flyway:
+    enabled: true
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  kafka:
+    bootstrap-servers: localhost:29092
+    consumer:
+      group-id: fraud-ai-service
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
 
 server:
   port: 8083
@@ -14,3 +31,8 @@ management:
     health:
       probes:
         enabled: true
+
+  fraud:
+    ai:
+      enabled: true
+      input-topic: fraud.suspected
