@@ -16,3 +16,13 @@ CREATE TABLE fraud_cases (
 );
 
 CREATE INDEX idx_fraud_cases_risk_created_at ON fraud_cases (risk_level, created_at);
+
+CREATE TABLE velocity_snapshots (
+    dimension VARCHAR(40) NOT NULL,
+    dimension_value VARCHAR(120) NOT NULL,
+    transaction_count BIGINT NOT NULL,
+    window_start TIMESTAMP WITH TIME ZONE NOT NULL,
+    window_end TIMESTAMP WITH TIME ZONE NOT NULL,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL,
+    PRIMARY KEY (dimension, dimension_value)
+);
