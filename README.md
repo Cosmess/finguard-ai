@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 5 concluída: o `fraud-ai-service` investiga eventos suspeitos com recomendações determinísticas e auditáveis.
+Fase 6 em andamento: o `knowledge-service` ingere documentos e retorna contexto com citações rastreáveis.
 
 ## Modulos
 
@@ -58,6 +58,10 @@ Sinais de recusas em janela curta ainda dependem de eventos de transacao recusad
 ## Investigacao assistida por IA
 
 O `fraud-ai-service` consome `fraud.suspected` e classifica a recomendação conforme o nível de risco: `REVIEW_MANUALLY` para risco alto, `COLLECT_MORE_CONTEXT` para risco médio e `NO_ACTION` para risco baixo. As evidências vêm dos sinais determinísticos do evento, são somente leitura e cada resultado é persistido em `fraud_investigation_audits`.
+
+## Base de conhecimento e RAG
+
+O `knowledge-service` recebe documentos em `POST /knowledge/documents` e realiza busca determinística em `GET /knowledge/search`. Cada resultado inclui trecho encontrado e citação com o documento e sua fonte. O schema próprio usa PostgreSQL com extensão pgvector; a coluna de embedding fica preparada para a próxima evolução sem depender de provedor externo nesta fase.
 
 ## Arquitetura
 
@@ -137,7 +141,7 @@ Portas locais planejadas:
 
 O `docker-compose.yml` sobe:
 
-- PostgreSQL 17 na porta `5432`
+- PostgreSQL 17 com pgvector na porta `5432`
 - Kafka na porta `29092`
 - Redis na porta `6379`
 

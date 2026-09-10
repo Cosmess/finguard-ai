@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 5 concluida e mesclada na `main`.
+Fase atual: Fase 6 implementada em branch.
 
 Branch atual:
 
 ```text
-main
+fase-6-knowledge-service-rag
 ```
 
 PR atual:
 
 ```text
-https://github.com/Cosmess/finguard-ai/pull/5 (mesclado)
+PR ainda nao criado.
 ```
 
 ## Implementado
@@ -152,11 +152,13 @@ Commits:
 
 ## Validacoes recentes
 
-Executadas na Fase 5:
+Executadas na Fase 6:
 
 ```text
-./mvnw clean -pl services/fraud-ai-service -am test -> BUILD SUCCESS (4 testes)
+./mvnw -pl services/fraud-ai-service -am test -> BUILD SUCCESS (4 testes)
+./mvnw clean -pl services/knowledge-service -am test -> BUILD SUCCESS (3 testes)
 ./mvnw clean verify -> BUILD SUCCESS
+docker compose config --quiet -> OK
 ```
 
 ## Falta implementar
@@ -182,11 +184,22 @@ fase-5-fraud-ai-service
 
 ### Fase 6: knowledge-service e RAG
 
-- base de conhecimento;
-- pgvector;
-- ingestao de documentos;
-- busca com citacoes;
-- testes deterministicos.
+Status: implementada em branch, aguardando abertura de PR.
+
+Entregas:
+
+- persistencia de documentos no `knowledge-service`;
+- endpoint de ingestao `POST /knowledge/documents`;
+- busca deterministica em `GET /knowledge/search`;
+- resultados com trechos e citacoes de fonte;
+- schema PostgreSQL com extensao pgvector e coluna de embedding preparada;
+- testes de contexto e busca deterministica.
+
+Branch:
+
+```text
+fase-6-knowledge-service-rag
+```
 
 ### Fase 7: disputas
 
@@ -227,12 +240,13 @@ fase-5-fraud-ai-service
 
 ## Proximo ponto de retomada
 
-1. Criar a branch da Fase 6 para `knowledge-service` e RAG.
-2. Implementar ingestao de documentos, busca com citacoes e testes deterministicos.
-3. Atualizar este arquivo ao final da tarefa.
+1. Criar o PR da Fase 6 para `main`.
+2. Mesclar o PR quando estiver aprovado.
+3. Criar a branch da Fase 7 para disputas.
+4. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 
-- O projeto usa `postgres:17-alpine`, porque o Flyway disponivel no Spring Boot 4.1.1 nao aceitou PostgreSQL 18 durante os testes.
+- O projeto usa `pgvector/pgvector:pg17`, porque o Flyway disponivel no Spring Boot 4.1.1 nao aceitou PostgreSQL 18 durante os testes.
 - Nao foi executado `docker compose down --volumes`, pois isso apagaria dados locais do PostgreSQL.
 - O README e a documentacao podem ficar em portugues; nomes de classes, metodos, APIs e eventos seguem em ingles.
