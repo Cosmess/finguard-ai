@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 7 concluída: o `dispute-service` gerencia disputas, evidências e revisão humana.
+Fase 8 em andamento: o `dispute-agent-service` organiza contexto de disputas com ferramentas somente leitura.
 
 ## Modulos
 
@@ -50,6 +50,10 @@ Endpoints principais:
 - `POST /disputes/{id}/evidence-request`: solicita evidências;
 - `POST /disputes/{id}/evidence`: anexa uma evidência;
 - `POST /disputes/{id}/review`: registra a revisão humana.
+
+## Agentes de disputa
+
+O `dispute-agent-service` usa LangChain4j para declarar ferramentas de consulta somente leitura. O orquestrador determinístico pode solicitar contexto, solicitar evidências ou encaminhar uma disputa com evidências para revisão manual. O agente não altera estados, cria evidências, aprova disputas nem executa chargebacks.
 
 ## Resiliencia de eventos
 

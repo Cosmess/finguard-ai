@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 7 concluida e mesclada na `main`.
+Fase atual: Fase 8 implementada em branch.
 
 Branch atual:
 
 ```text
-main
+fase-8-agents-langchain4j
 ```
 
 PR atual:
 
 ```text
-https://github.com/Cosmess/finguard-ai/pull/7 (mesclado)
+PR ainda nao criado.
 ```
 
 ## Implementado
@@ -152,10 +152,10 @@ Commits:
 
 ## Validacoes recentes
 
-Executadas na Fase 7:
+Executadas na Fase 8:
 
 ```text
-./mvnw clean -pl services/dispute-service -am test -> BUILD SUCCESS (3 testes)
+./mvnw clean -pl services/dispute-agent-service -am test -> BUILD SUCCESS (3 testes)
 ./mvnw clean verify -> BUILD SUCCESS
 ```
 
@@ -220,9 +220,23 @@ fase-7-disputes
 
 ### Fase 8: agentes com LangChain4j
 
-- agentes apenas depois das bases deterministicas;
-- orquestracao explicita;
-- limites claros de ferramentas e permissoes.
+Status: implementada em branch, aguardando abertura de PR.
+
+Entregas:
+
+- dependência LangChain4j no `dispute-agent-service`;
+- ferramentas `@Tool` somente leitura para status e evidências;
+- orquestração determinística explícita;
+- recomendações `REQUEST_CONTEXT`, `REQUEST_EVIDENCE` e `REVIEW_MANUALLY`;
+- nenhum modelo externo ou credencial em CI;
+- ADR 0007 sobre agentes sem autoridade transacional;
+- testes de orquestração e limites de permissão.
+
+Branch:
+
+```text
+fase-8-agents-langchain4j
+```
 
 ### Fase 9: decision-service
 
@@ -250,9 +264,10 @@ fase-7-disputes
 
 ## Proximo ponto de retomada
 
-1. Criar a branch da Fase 8 para agentes com LangChain4j.
-2. Implementar orquestracao explicita e ferramentas somente leitura.
-3. Atualizar este arquivo ao final da tarefa.
+1. Criar o PR da Fase 8 para `main`.
+2. Mesclar o PR quando estiver aprovado.
+3. Criar a branch da Fase 9 para `decision-service`.
+4. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 
