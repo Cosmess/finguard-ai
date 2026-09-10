@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 6 implementada em branch.
+Fase atual: Fase 6 concluida e mesclada na `main`.
 
 Branch atual:
 
 ```text
-fase-6-knowledge-service-rag
+main
 ```
 
 PR atual:
 
 ```text
-PR ainda nao criado.
+https://github.com/Cosmess/finguard-ai/pull/6 (mesclado)
 ```
 
 ## Implementado
@@ -184,7 +184,7 @@ fase-5-fraud-ai-service
 
 ### Fase 6: knowledge-service e RAG
 
-Status: implementada em branch, aguardando abertura de PR.
+Status: concluida e mesclada na `main`.
 
 Entregas:
 
@@ -240,10 +240,9 @@ fase-6-knowledge-service-rag
 
 ## Proximo ponto de retomada
 
-1. Criar o PR da Fase 6 para `main`.
-2. Mesclar o PR quando estiver aprovado.
-3. Criar a branch da Fase 7 para disputas.
-4. Atualizar este arquivo ao final da tarefa.
+1. Criar a branch da Fase 7 para disputas.
+2. Implementar o agregado de disputa, evidencias, estados do ciclo de vida e revisao humana.
+3. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 

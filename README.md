@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 6 em andamento: o `knowledge-service` ingere documentos e retorna contexto com citações rastreáveis.
+Fase 6 concluída: o `knowledge-service` ingere documentos e retorna contexto com citações rastreáveis.
 
 ## Modulos
 
