@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 8 concluida e mesclada na `main`.
+Fase atual: Fase 9 implementada em branch.
 
 Branch atual:
 
 ```text
-main
+fase-9-decision-service
 ```
 
 PR atual:
 
 ```text
-https://github.com/Cosmess/finguard-ai/pull/8 (mesclado)
+PR ainda nao criado.
 ```
 
 ## Implementado
@@ -152,10 +152,10 @@ Commits:
 
 ## Validacoes recentes
 
-Executadas na Fase 8:
+Executadas na Fase 9:
 
 ```text
-./mvnw clean -pl services/dispute-agent-service -am test -> BUILD SUCCESS (3 testes)
+./mvnw clean -pl services/decision-service -am test -> BUILD SUCCESS (3 testes)
 ./mvnw clean verify -> BUILD SUCCESS
 ```
 
@@ -229,7 +229,7 @@ Entregas:
 - orquestração determinística explícita;
 - recomendações `REQUEST_CONTEXT`, `REQUEST_EVIDENCE` e `REVIEW_MANUALLY`;
 - nenhum modelo externo ou credencial em CI;
-- ADR 0007 sobre agentes sem autoridade transacional;
+- ADRs 0007 e 0008 sobre agentes sem autoridade transacional;
 - testes de orquestração e limites de permissão.
 
 Branch:
@@ -240,10 +240,22 @@ fase-8-agents-langchain4j
 
 ### Fase 9: decision-service
 
-- politicas deterministicas;
-- thresholds;
-- revisao humana;
-- decisao a partir de sinais de fraude, IA e disputa.
+Status: implementada em branch, aguardando abertura de PR.
+
+Entregas:
+
+- política determinística com threshold de fraude;
+- integração de sinais de fraude, recomendação de IA e status de disputa;
+- resultados `APPROVE` e `HOLD_FOR_REVIEW`;
+- persistência das decisões e sinais para auditoria;
+- endpoint `POST /decisions`;
+- testes de baixo risco, alto risco e contexto Spring.
+
+Branch:
+
+```text
+fase-9-decision-service
+```
 
 ### Fase 10: observabilidade
 
@@ -264,9 +276,10 @@ fase-8-agents-langchain4j
 
 ## Proximo ponto de retomada
 
-1. Criar a branch da Fase 9 para `decision-service`.
-2. Implementar políticas determinísticas, thresholds e revisão humana.
-3. Atualizar este arquivo ao final da tarefa.
+1. Criar o PR da Fase 9 para `main`.
+2. Mesclar o PR quando estiver aprovado.
+3. Criar a branch da Fase 10 para observabilidade.
+4. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 
