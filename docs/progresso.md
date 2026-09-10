@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 10 concluida e mesclada na `main`.
+Fase atual: Fase 11 implementada em branch.
 
 Branch atual:
 
 ```text
-main
+fase-11-security
 ```
 
 PR atual:
 
 ```text
-https://github.com/Cosmess/finguard-ai/pull/10 (mesclado)
+PR ainda nao criado.
 ```
 
 ## Implementado
@@ -152,11 +152,10 @@ Commits:
 
 ## Validacoes recentes
 
-Executadas na Fase 10:
+Executadas na Fase 11:
 
 ```text
-./mvnw clean verify -> BUILD SUCCESS
-docker compose config --quiet -> OK
+./mvnw clean -pl services/payment-service -am test -> BUILD SUCCESS (6 testes)
 ```
 
 ## Falta implementar
@@ -291,18 +290,28 @@ https://github.com/Cosmess/finguard-ai/pull/10 (mesclado)
 
 ### Fase 11: seguranca
 
-- JWT;
-- RBAC;
-- configuracao Spring Security.
+Status: implementada em branch, aguardando abertura de PR.
 
-### Fase 12: frontend opcional
+Entregas:
 
-- interface Next.js somente depois do backend estabilizar.
+- resource server JWT reutilizável em `common-observability`;
+- RBAC por claim `roles`;
+- `ROLE_OPS` para métricas e `ROLE_ADMIN` para caminhos administrativos;
+- `payment-service` protegido por padrão;
+- segredo configurável por `FINGUARD_JWT_SECRET`;
+- ADR 0010 e runbook em `docs/security.md`;
+- perfil de testes com segurança desativada para preservar os testes de domínio.
+
+Branch:
+
+```text
+fase-11-security
+```
 
 ## Proximo ponto de retomada
 
-1. Criar a branch da Fase 11 para segurança.
-2. Implementar JWT, RBAC e configuração Spring Security.
+1. Criar o PR da Fase 11 para `main`.
+2. Mesclar o PR quando estiver aprovado.
 3. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes

@@ -36,3 +36,8 @@ payment:
     topic: transaction.created
     fixed-delay: 5s
     max-attempts: 5
+
+security:
+  jwt:
+    enabled: true
+    secret: ${FINGUARD_JWT_SECRET:change-this-local-secret-to-a-32-byte-value}
