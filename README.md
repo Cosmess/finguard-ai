@@ -21,6 +21,24 @@ Fase 2 em andamento: `payment-service` publica `TransactionCreated` via outbox e
 - `services/knowledge-service`: base de conhecimento e RAG.
 - `services/notification-service`: notificacoes operacionais.
 
+## O que cada servico faz
+
+`payment-service` recebe transacoes, valida os dados de entrada, persiste o registro financeiro e grava o evento `TransactionCreated` na outbox. Ele e o ponto inicial do fluxo e nao decide fraude sozinho.
+
+`fraud-detection-service` consome `TransactionCreated`, aplica regras deterministicas de fraude e calcula score de risco. Quando a transacao fica em risco medio ou alto, registra um caso de fraude e publica `FraudSuspected`.
+
+`fraud-ai-service` sera responsavel por investigacoes assistidas por IA. Ele deve explicar sinais suspeitos, sugerir proximas acoes e usar ferramentas apenas para leitura, sem autoridade para executar decisoes financeiras.
+
+`dispute-service` cuidara do ciclo de vida das disputas, incluindo abertura, analise, evidencias, prazos, estados e revisao humana.
+
+`dispute-agent-service` orquestrara agentes voltados a disputas, como coleta de evidencias, organizacao de contexto e apoio a analistas. Ele trabalha sobre dados auditaveis e nao aprova chargebacks diretamente.
+
+`decision-service` concentrara politicas deterministicas de decisao. Ele transforma sinais de fraude, IA, disputas e regras de negocio em recomendacoes ou decisoes permitidas pelo fluxo.
+
+`knowledge-service` mantera a base de conhecimento usada por RAG, com documentos, politicas, embeddings e citacoes. Ele ajuda os servicos de IA a responder com contexto rastreavel.
+
+`notification-service` enviara comunicacoes operacionais, como alertas de fraude, eventos de disputa e notificacoes internas para revisao humana.
+
 ## Arquitetura
 
 ```mermaid
