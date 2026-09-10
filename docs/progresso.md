@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 8 implementada em branch.
+Fase atual: Fase 8 concluida e mesclada na `main`.
 
 Branch atual:
 
 ```text
-fase-8-agents-langchain4j
+main
 ```
 
 PR atual:
 
 ```text
-PR ainda nao criado.
+https://github.com/Cosmess/finguard-ai/pull/8 (mesclado)
 ```
 
 ## Implementado
@@ -220,7 +220,7 @@ fase-7-disputes
 
 ### Fase 8: agentes com LangChain4j
 
-Status: implementada em branch, aguardando abertura de PR.
+Status: concluida e mesclada na `main`.
 
 Entregas:
 
@@ -264,10 +264,9 @@ fase-8-agents-langchain4j
 
 ## Proximo ponto de retomada
 
-1. Criar o PR da Fase 8 para `main`.
-2. Mesclar o PR quando estiver aprovado.
-3. Criar a branch da Fase 9 para `decision-service`.
-4. Atualizar este arquivo ao final da tarefa.
+1. Criar a branch da Fase 9 para `decision-service`.
+2. Implementar políticas determinísticas, thresholds e revisão humana.
+3. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 

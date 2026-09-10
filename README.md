@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 8 em andamento: o `dispute-agent-service` organiza contexto de disputas com ferramentas somente leitura.
+Fase 8 concluída: o `dispute-agent-service` organiza contexto de disputas com ferramentas somente leitura.
 
 ## Modulos
 
