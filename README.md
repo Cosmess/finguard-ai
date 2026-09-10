@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 9 concluída: o `decision-service` aplica políticas determinísticas e retém casos que exigem revisão humana.
+Fase 10 em andamento: os serviços expõem métricas Prometheus e correlação HTTP para operação local.
 
 ## Modulos
 
@@ -58,6 +58,10 @@ O `dispute-agent-service` usa LangChain4j para declarar ferramentas de consulta 
 ## Decisões determinísticas
 
 O `decision-service` recebe score e nível de fraude, recomendação da IA e status de disputa em `POST /decisions`. Scores altos, risco `HIGH` ou recomendação `REVIEW_MANUALLY` produzem `HOLD_FOR_REVIEW`; sem sinais de escalonamento, o resultado é `APPROVE`. Toda decisão e seus sinais são persistidos para auditoria.
+
+## Observabilidade
+
+Todos os serviços expõem `/actuator/prometheus` e preservam ou geram `X-Correlation-Id`. O Compose local inclui Prometheus em `http://localhost:9090` e Grafana em `http://localhost:3000`. O runbook está em `docs/observability.md`.
 
 ## Resiliencia de eventos
 

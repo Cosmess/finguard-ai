@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 9 concluida e mesclada na `main`.
+Fase atual: Fase 10 implementada em branch.
 
 Branch atual:
 
 ```text
-main
+fase-10-observability
 ```
 
 PR atual:
 
 ```text
-https://github.com/Cosmess/finguard-ai/pull/9 (mesclado)
+PR ainda nao criado.
 ```
 
 ## Implementado
@@ -152,11 +152,11 @@ Commits:
 
 ## Validacoes recentes
 
-Executadas na Fase 9:
+Executadas na Fase 10:
 
 ```text
-./mvnw clean -pl services/decision-service -am test -> BUILD SUCCESS (3 testes)
 ./mvnw clean verify -> BUILD SUCCESS
+docker compose config --quiet -> OK
 ```
 
 ## Falta implementar
@@ -265,10 +265,23 @@ https://github.com/Cosmess/finguard-ai/pull/9 (mesclado)
 
 ### Fase 10: observabilidade
 
-- OpenTelemetry;
-- Prometheus;
-- Grafana;
-- dashboards e runbooks.
+Status: implementada em branch, aguardando abertura de PR.
+
+Entregas:
+
+- registry Prometheus nos oito serviços;
+- endpoint `/actuator/prometheus` exposto de forma uniforme;
+- filtro comum para `X-Correlation-Id`;
+- Prometheus e Grafana no Compose local;
+- configuração de scrape em `infrastructure/prometheus/prometheus.yml`;
+- runbook em `docs/observability.md`;
+- ADR 0009 sobre a stack de observabilidade.
+
+Branch:
+
+```text
+fase-10-observability
+```
 
 ### Fase 11: seguranca
 
@@ -282,9 +295,10 @@ https://github.com/Cosmess/finguard-ai/pull/9 (mesclado)
 
 ## Proximo ponto de retomada
 
-1. Criar a branch da Fase 10 para observabilidade.
-2. Implementar OpenTelemetry, métricas, dashboards e runbooks.
-3. Atualizar este arquivo ao final da tarefa.
+1. Criar o PR da Fase 10 para `main`.
+2. Mesclar o PR quando estiver aprovado.
+3. Criar a branch da Fase 11 para segurança.
+4. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 
