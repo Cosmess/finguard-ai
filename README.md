@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 4 em andamento: Kafka Streams calcula sinais de velocidade por janela e o `fraud-detection-service` incorpora alto volume recente ao score de fraude.
+Fase 5 em andamento: o `fraud-ai-service` investiga eventos suspeitos com recomendações determinísticas e auditáveis.
 
 ## Modulos
 
@@ -27,7 +27,7 @@ Fase 4 em andamento: Kafka Streams calcula sinais de velocidade por janela e o `
 
 `fraud-detection-service` consome `TransactionCreated`, aplica regras deterministicas de fraude e calcula score de risco. Quando a transacao fica em risco medio ou alto, registra um caso de fraude e publica `FraudSuspected`.
 
-`fraud-ai-service` sera responsavel por investigacoes assistidas por IA. Ele deve explicar sinais suspeitos, sugerir proximas acoes e usar ferramentas apenas para leitura, sem autoridade para executar decisoes financeiras.
+`fraud-ai-service` consome eventos `fraud.suspected`, produz recomendações estruturadas para revisão humana ou coleta de contexto e audita cada recomendação no próprio banco. O stub inicial é determinístico e não executa decisões financeiras nem usa provedores externos.
 
 `dispute-service` cuidara do ciclo de vida das disputas, incluindo abertura, analise, evidencias, prazos, estados e revisao humana.
 
@@ -54,6 +54,10 @@ O `fraud-detection-service` usa Kafka Streams para agregar `transaction.created`
 O proprio servico consome esse evento, persiste o snapshot em `velocity_snapshots` e usa o sinal `CUSTOMER_VELOCITY` no motor de regras quando o volume recente do cliente ultrapassa o limite configurado no codigo da fase.
 
 Sinais de recusas em janela curta ainda dependem de eventos de transacao recusada, que serao adicionados quando o fluxo de autorizacao ganhar estados de recusa.
+
+## Investigacao assistida por IA
+
+O `fraud-ai-service` consome `fraud.suspected` e classifica a recomendação conforme o nível de risco: `REVIEW_MANUALLY` para risco alto, `COLLECT_MORE_CONTEXT` para risco médio e `NO_ACTION` para risco baixo. As evidências vêm dos sinais determinísticos do evento, são somente leitura e cada resultado é persistido em `fraud_investigation_audits`.
 
 ## Arquitetura
 

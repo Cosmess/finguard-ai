@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 4 concluida e mesclada na `main`.
+Fase atual: Fase 5 implementada em branch.
 
 Branch atual:
 
 ```text
-fase-4-kafka-streams-velocidade
+fase-5-fraud-ai-service
 ```
 
 PR atual:
 
 ```text
-https://github.com/Cosmess/finguard-ai/pull/4 (mesclado)
+PR ainda nao criado.
 ```
 
 ## Implementado
@@ -152,23 +152,33 @@ Commits:
 
 ## Validacoes recentes
 
-Executadas na Fase 4:
+Executadas na Fase 5:
 
 ```text
-./mvnw -pl services/fraud-detection-service -am test -> BUILD SUCCESS
+./mvnw clean -pl services/fraud-ai-service -am test -> BUILD SUCCESS (4 testes)
 ./mvnw clean verify -> BUILD SUCCESS
-docker compose config --quiet -> OK
 ```
 
 ## Falta implementar
 
 ### Fase 5: servico de IA para fraude
 
-- `fraud-ai-service` com stub deterministico inicial;
-- respostas estruturadas e validadas;
-- ferramentas somente leitura;
-- auditoria das recomendacoes;
-- nenhuma chave de provedor externo em CI.
+Status: implementada em branch, aguardando abertura de PR.
+
+Entregas:
+
+- `fraud-ai-service` consome `fraud.suspected`;
+- stub deterministico para niveis `HIGH`, `MEDIUM` e `LOW`;
+- recomendacoes estruturadas e validadas;
+- recomendacao de contexto adicional explicitamente somente leitura;
+- auditoria persistida em `fraud_investigation_audits`;
+- nenhuma chave ou cliente de provedor externo em CI.
+
+Branch:
+
+```text
+fase-5-fraud-ai-service
+```
 
 ### Fase 6: knowledge-service e RAG
 
@@ -217,9 +227,10 @@ docker compose config --quiet -> OK
 
 ## Proximo ponto de retomada
 
-1. Criar branch `fase-5-fraud-ai-service` a partir da `main` atualizada.
-2. Implementar o stub deterministico inicial do `fraud-ai-service`.
-3. Atualizar este arquivo ao final da tarefa.
+1. Criar o PR da Fase 5 para `main`.
+2. Mesclar o PR quando estiver aprovado.
+3. Criar a branch da Fase 6 para `knowledge-service` e RAG.
+4. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 
