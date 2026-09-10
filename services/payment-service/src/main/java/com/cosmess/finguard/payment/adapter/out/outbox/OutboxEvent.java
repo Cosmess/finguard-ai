@@ -37,6 +37,12 @@ class OutboxEvent {
     private OutboxStatus status;
 
     @Column(nullable = false)
+    private int attempts;
+
+    @Column(columnDefinition = "TEXT")
+    private String lastError;
+
+    @Column(nullable = false)
     private Instant createdAt;
 
     private Instant publishedAt;
@@ -61,6 +67,7 @@ class OutboxEvent {
         this.topic = topic;
         this.payload = payload;
         this.status = status;
+        this.attempts = 0;
         this.createdAt = createdAt;
     }
 
@@ -84,8 +91,21 @@ class OutboxEvent {
         return payload;
     }
 
+    int attempts() {
+        return attempts;
+    }
+
     void markPublished(Instant publishedAt) {
         this.status = OutboxStatus.PUBLISHED;
         this.publishedAt = publishedAt;
+        this.lastError = null;
+    }
+
+    void markFailed(String errorMessage, int maxAttempts) {
+        this.attempts++;
+        this.lastError = errorMessage;
+        if (this.attempts >= maxAttempts) {
+            this.status = OutboxStatus.FAILED;
+        }
     }
 }

@@ -35,3 +35,4 @@ payment:
     publishing-enabled: true
     topic: transaction.created
     fixed-delay: 5s
+    max-attempts: 5
