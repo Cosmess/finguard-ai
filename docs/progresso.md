@@ -14,18 +14,18 @@ Ao final de cada tarefa, atualize:
 
 ## Estado atual
 
-Fase atual: Fase 7 implementada em branch.
+Fase atual: Fase 7 concluida e mesclada na `main`.
 
 Branch atual:
 
 ```text
-fase-7-disputes
+main
 ```
 
 PR atual:
 
 ```text
-PR ainda nao criado.
+https://github.com/Cosmess/finguard-ai/pull/7 (mesclado)
 ```
 
 ## Implementado
@@ -201,7 +201,7 @@ fase-6-knowledge-service-rag
 
 ### Fase 7: disputas
 
-Status: implementada em branch, aguardando abertura de PR.
+Status: concluida e mesclada na `main`.
 
 Entregas:
 
@@ -250,10 +250,9 @@ fase-7-disputes
 
 ## Proximo ponto de retomada
 
-1. Criar o PR da Fase 7 para `main`.
-2. Mesclar o PR quando estiver aprovado.
-3. Criar a branch da Fase 8 para agentes com LangChain4j.
-4. Atualizar este arquivo ao final da tarefa.
+1. Criar a branch da Fase 8 para agentes com LangChain4j.
+2. Implementar orquestracao explicita e ferramentas somente leitura.
+3. Atualizar este arquivo ao final da tarefa.
 
 ## Pendencias e observacoes
 

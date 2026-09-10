@@ -6,7 +6,7 @@ O projeto nasce como um monorepo Maven em Java 25, com servicos Spring Boot inde
 
 ## Estado atual
 
-Fase 7 em andamento: o `dispute-service` gerencia disputas, evidências e revisão humana.
+Fase 7 concluída: o `dispute-service` gerencia disputas, evidências e revisão humana.
 
 ## Modulos
 
